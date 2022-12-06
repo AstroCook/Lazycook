@@ -1,0 +1,25 @@
+from uuid import UUID
+
+from pydantic import BaseModel
+
+from app.schemas.base import BasicModel
+
+
+class BaseAllergy(BasicModel):
+    name: str
+
+    users: UUID
+
+
+class CreateAllergy(BaseModel):
+    name: str
+
+
+class BaseUserAllergy(BasicModel):
+    user_id: UUID
+    allergy_id: UUID
+
+
+class CreateUserAllergy(BasicModel):
+    user_id: UUID
+    allergy_id: UUID

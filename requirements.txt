@@ -1,6 +1,7 @@
 fastapi==0.86.0
 sqlalchemy==1.4.42
 pydantic==1.10.2
+bcrypt
 uvicorn
 python-jose[cryptography]
 passlib

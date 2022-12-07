@@ -4,12 +4,12 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from schemas import tokens as schemas_tokens
 from sqlalchemy.orm import Session
 
 from app import models
 from app.crud import users as crud_users
 from app.database import get_db
+from app.schemas import tokens as schemas_tokens
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

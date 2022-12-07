@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 PGUSER = os.environ.get("PGUSER", default="Maks")
 PGPASSWORD = os.environ.get("PGPASSWORD", default="Maks")
 PGHOST = os.environ.get("PGHOST", default="db")
-PGPORT = ":" + os.environ.get("PGPORT", default="")
+PGPORT = ":" + os.environ.get("PGPORT", default="5432")
 PGDATABASE = os.environ.get("PGDATABASE", default="lazycook")
 
 SQLALCHEMY_DATABASE_URL = (

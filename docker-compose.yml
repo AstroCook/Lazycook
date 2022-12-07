@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./local/postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=Maks
+      - POSTGRES_PASSWORD=Maks
+      - POSTGRES_DB=lazycook
+
+  web:
+    build:
+      context: .
+      dockerfile: ./dockerfile.yml
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - PYTHONPATH=/app
+    command: bash -c "cd /app/app && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./app:/app/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

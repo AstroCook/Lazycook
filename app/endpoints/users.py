@@ -1,13 +1,13 @@
 from datetime import datetime
 from uuid import UUID
 
-from database import get_db
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app import models
 from app.crud import authentication as crud_auth
 from app.crud import users as crud_users
+from app.database import get_db
 from app.schemas import users as schemas_users
 
 router = APIRouter()

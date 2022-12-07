@@ -1,13 +1,13 @@
 from datetime import timedelta
 
-from crud import authentication as crud_auth
-from database import get_db
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from schemas import tokens as schemas_tokens
 from sqlalchemy.orm import Session
 
 from app import models
+from app.crud import authentication as crud_auth
+from app.database import get_db
+from app.schemas import tokens as schemas_tokens
 
 router = APIRouter()
 

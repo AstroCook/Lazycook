@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app import models
-from app.crud import authentication as crud_auth
 from app.crud import allergies as crud_allergies
+from app.crud import authentication as crud_auth
 from app.schemas import allergies as schemas_allergies
 
 router = APIRouter()

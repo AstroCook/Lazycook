@@ -1,13 +1,13 @@
 from typing import List
 
-from endpoints.authentication import router as authentication_router
-from endpoints.users import router as users_router
-from endpoints.allergies import router as allergies_router
 from fastapi import APIRouter, Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import crud, models, schemas
 from app.database import engine
+from app.endpoints.allergies import router as allergies_router
+from app.endpoints.authentication import router as authentication_router
+from app.endpoints.users import router as users_router
 
 models.Base.metadata.create_all(bind=engine)
 

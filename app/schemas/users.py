@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from app.schemas.allergies import BaseUserAllergy
+from app.schemas.allergies import UserAllergyShow
 from app.schemas.base import BasicModel
 
 
@@ -13,7 +13,7 @@ class UserBase(BasicModel):
     avatar_url: str
     description: Optional[str]
 
-    allergies: Optional[List[BaseUserAllergy]]
+    allergies: Optional[List[UserAllergyShow]]
 
 
 class UserInDB(UserBase):
@@ -27,5 +27,3 @@ class CreateUser(BaseModel):
     password: str
     avatar_url: str
     description: Optional[str]
-
-    allergies: Optional[List[BaseUserAllergy]]

@@ -1,3 +1,5 @@
 import os
+import uvicorn
 
-os.system("pip install requirements/base.txt && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload")
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=os.getenv("PORT", default=5000), log_level="info")

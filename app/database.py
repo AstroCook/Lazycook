@@ -10,7 +10,9 @@ PGHOST = os.environ.get("PGHOST", default="db")
 PGPORT = ":" + os.environ.get("PGPORT", default="")
 PGDATABASE = os.environ.get("PGDATABASE", default="lazycook")
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{PGUSER}:{PGPASSWORD }@{PGHOST}{PGPORT}/{PGDATABASE}"
+SQLALCHEMY_DATABASE_URL = (
+    f"postgresql://{PGUSER}:{PGPASSWORD }@{PGHOST}{PGPORT}/{PGDATABASE}"
+)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

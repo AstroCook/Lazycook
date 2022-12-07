@@ -1,0 +1,12 @@
+FROM python:3.10-slim
+
+ADD ./requirements /requirements
+RUN python3 -m pip install --upgrade pip && python3 -m pip install -r ./requirements/base.txt
+RUN cd /app/app && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+ADD  ./app /app/app

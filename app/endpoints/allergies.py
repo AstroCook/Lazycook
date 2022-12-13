@@ -22,20 +22,20 @@ def read_allergies(
     return crud_allergies.get_all_allergies(db=db, skip=skip, limit=limit)
 
 
-# @router.get("/{user_id}")
-# def read_user_by_id(user_id: UUID, db: Session = Depends(get_db)):
-#     return crud_users.get_user_by_id(db=db, user_id=user_id)
+@router.get("/{allergy_id}")
+def read_allergy_by_id(allergy_id: UUID, db: Session = Depends(get_db)):
+    return crud_allergies.get_allergy_by_id(db=db, allergy_id=allergy_id)
 
 
-# @router.post("")
-# def create_user(user: schemas_users.CreateUser, db: Session = Depends(get_db)):
-#     return crud_users.create_user(db=db, user=user)
+@router.post("")
+def create_allergy(allergy: schemas_allergies.CreateAllergy, db: Session = Depends(get_db), user: models.User = Depends(crud_auth.get_current_active_user)):
+    return crud_allergies.create_allergy(db=db, allergy=allergy)
 
 
-# @router.delete("")
-# def remove_user(
-#     user_id: UUID,
-#     db: Session = Depends(get_db),
-#     user: models.User = Depends(crud_auth.get_current_active_user),
-# ):
-#     return crud_users.remove_user(db=db, user_id=user_id, user=user)
+@router.delete("")
+def remove_allergy(
+    allergy_id: UUID,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(crud_auth.get_current_active_user),
+):
+    return crud_allergies.remove_allergy(db=db, allergy_id=allergy_id, user=user)

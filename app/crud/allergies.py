@@ -17,7 +17,7 @@ def get_all_allergies(db: Session, skip: int = 0, limit: int = 25):
 
 
 def get_allergy_by_id(db: Session, allergy_id: UUID):
-    return db.query(models.BaseAllergy).filter(models.Allergy.id == allergy_id).first()
+    return db.query(models.Allergy).filter(models.Allergy.id == allergy_id).first()
 
 
 def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
@@ -28,11 +28,11 @@ def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
     return db_allergy
 
 
-def remove_user(db: Session, user: models.User, allergy_id: UUID):
+def remove_allergy(db: Session, user: models.User, allergy_id: UUID):
     # TODO: Implement "admins" table
     if True:
         db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
-        db.delete(db_user)
+        db.delete(db_allergy)
         db.commit()
         return "Allergy removed"
     raise crud_auth.privlige_exception

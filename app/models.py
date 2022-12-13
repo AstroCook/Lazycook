@@ -29,6 +29,11 @@ class User(BaseDatabaseModel):
 
     allergies = relationship("UserAllergy", back_populates="user")
 
+class Admin(BaseDatabaseModel):
+    __tablename__= "admins"
+
+    user_id = Column(UUID, ForeignKey("users.id"))
+    access_level = Column(Integer)
 
 class UserAllergy(BaseDatabaseModel):
     __tablename__ = "user_allergies"

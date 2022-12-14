@@ -28,7 +28,7 @@ def upgrade() -> None:
         sa.Column('date_of_creation', sa.DateTime(timezone=True), server_default=func.now()),
         sa.Column('date_of_last_edit', sa.DateTime(timezone=True), onupdate=func.now()),
         sa.Column('disabled', sa.Boolean, default=False),
-        sa.Column('username', UUID, sa.ForeignKey("users.id")),
+        sa.Column('username', sa.String),
         sa.Column('name', sa.String),
         sa.Column('surname', sa.String),
         sa.Column('password', sa.String),

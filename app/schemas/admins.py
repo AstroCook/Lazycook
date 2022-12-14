@@ -1,16 +1,18 @@
 from typing import List, Optional
-from enum import Enum, IntEnum
+from enum import IntEnum
+from uuid import UUID
 
 from pydantic import BaseModel
 
 from app.schemas.base import BasicModel
 
-class permissions(Enum):
+class permissions(IntEnum):
     head_admin = 1
 
 class BaseAdmin(BasicModel):
-    access_level = IntEnum(permissions)
-    allergies: Optional[List[UserAllergyShow]]
+    access_level: permissions
+    user_id: UUID
 
 class CreateAdmin(BaseModel):
-    access_le
+    access_level: permissions
+    user_id: UUID

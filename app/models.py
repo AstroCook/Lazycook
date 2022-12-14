@@ -28,6 +28,7 @@ class User(BaseDatabaseModel):
     avatar_url = Column(String)
 
     allergies = relationship("UserAllergy", back_populates="user")
+    permissions = relationship("Admin")
 
 class Admin(BaseDatabaseModel):
     __tablename__= "admins"

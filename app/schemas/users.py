@@ -3,6 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from app.schemas.allergies import UserAllergyShow
+from app.schemas.admins import BaseAdmin
 from app.schemas.base import BasicModel
 
 
@@ -14,7 +15,7 @@ class UserBase(BasicModel):
     description: Optional[str]
 
     allergies: Optional[List[UserAllergyShow]]
-
+    permissions: Optional[BaseAdmin]
 
 class UserInDB(UserBase):
     password: str

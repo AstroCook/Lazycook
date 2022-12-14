@@ -8,6 +8,7 @@ from app.database import engine
 from app.endpoints.allergies import router as allergies_router
 from app.endpoints.authentication import router as authentication_router
 from app.endpoints.users import router as users_router
+from app.endpoints.permissions import router as perm_router
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -17,6 +18,7 @@ api_router = APIRouter()
 api_router.include_router(authentication_router, prefix="", tags=["auth"])
 api_router.include_router(users_router, prefix="/users", tags=["users"])
 api_router.include_router(allergies_router, prefix="/allergies", tags=["allergies"])
+api_router.include_router(perm_router, prefix="/perm", tags=["permissions"])
 
 origins = ["*"]
 

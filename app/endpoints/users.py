@@ -1,9 +1,10 @@
 from datetime import datetime
+from typing import List
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List
+
 from app import models
 from app.crud import authentication as crud_auth
 from app.crud import users as crud_users
@@ -26,7 +27,6 @@ def read_users(
 @router.get("/{user_id}", response_model=schemas_users.UserBase)
 def read_user_by_id(user_id: UUID, db: Session = Depends(get_db)):
     return crud_users.get_user_by_id(db=db, user_id=user_id)
-    
 
 
 @router.post("")

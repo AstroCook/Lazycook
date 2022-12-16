@@ -28,7 +28,11 @@ def read_allergy_by_id(allergy_id: UUID, db: Session = Depends(get_db)):
 
 
 @router.post("")
-def create_allergy(allergy: schemas_allergies.CreateAllergy, db: Session = Depends(get_db), user: models.User = Depends(crud_auth.get_current_active_user)):
+def create_allergy(
+    allergy: schemas_allergies.CreateAllergy,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(crud_auth.get_current_active_user),
+):
     return crud_allergies.create_allergy(db=db, allergy=allergy)
 
 

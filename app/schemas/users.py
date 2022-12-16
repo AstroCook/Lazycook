@@ -2,8 +2,8 @@ from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
-from app.schemas.allergies import UserAllergyShow
 from app.schemas.admins import BaseAdmin
+from app.schemas.allergies import UserAllergyShow
 from app.schemas.base import BasicModel
 
 
@@ -16,6 +16,7 @@ class UserBase(BasicModel):
 
     allergies: Union[List[UserAllergyShow], UserAllergyShow] = []
     access_level: Optional[BaseAdmin]
+
 
 class UserInDB(UserBase):
     password: str

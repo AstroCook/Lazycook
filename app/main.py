@@ -7,8 +7,8 @@ from app import crud, models, schemas
 from app.database import engine
 from app.endpoints.allergies import router as allergies_router
 from app.endpoints.authentication import router as authentication_router
-from app.endpoints.users import router as users_router
 from app.endpoints.permissions import router as perm_router
+from app.endpoints.users import router as users_router
 
 models.Base.metadata.create_all(bind=engine)
 

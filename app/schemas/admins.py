@@ -8,6 +8,7 @@ from app.schemas.base import BasicModel
 
 class permissions(IntEnum):
     head_admin = 1
+    admin = 2
 
 class BaseAdmin(BasicModel):
     access_level: permissions

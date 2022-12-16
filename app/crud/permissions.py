@@ -22,6 +22,8 @@ def get_user_access_level_from_id(db: Session, uuid: UUID):
     return admin.access_level
 
 def add_admin(db: Session, admin: schemas_admins.CreateAdmin):
+    # user_id = admin.user_id
+    # db.user = models.User(**{"":""})
     db_admin = models.Admin(**admin.dict())
     db.add(db_admin)
     db.commit()

@@ -14,8 +14,8 @@ class UserBase(BasicModel):
     avatar_url: str
     description: Optional[str]
 
-    allergies: Optional[List[UserAllergyShow]]
-    permissions: Optional[BaseAdmin]
+    allergies: Union[List[UserAllergyShow], UserAllergyShow] = []
+    access_level: Optional[BaseAdmin]
 
 class UserInDB(UserBase):
     password: str

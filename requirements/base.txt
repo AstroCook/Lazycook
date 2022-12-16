@@ -7,3 +7,4 @@ python-jose[cryptography]
 passlib
 psycopg2-binary
 python-multipart
+alembic

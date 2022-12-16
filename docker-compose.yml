@@ -16,10 +16,12 @@ services:
     build:
       context: .
       dockerfile: ./dockerfile.yml
+    env_file:
+      - .env.local
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
       - PYTHONPATH=/app
-    command: bash -c "cd /app/app && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    command: bash -c "cd /app/app/alembic && alembic upgrade head && cd .. && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
       - ./app:/app/app
     ports:

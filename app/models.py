@@ -28,13 +28,23 @@ class User(BaseDatabaseModel):
     avatar_url = Column(String)
 
     allergies = relationship("UserAllergy", back_populates="user")
+    access_level = relationship("Admin", back_populates="user", uselist=False)
+
+
+class Admin(BaseDatabaseModel):
+    __tablename__ = "admins"
+
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    access_level = Column(Integer)
+
+    user = relationship("User", back_populates="access_level")
 
 
 class UserAllergy(BaseDatabaseModel):
     __tablename__ = "user_allergies"
 
-    user_id = Column(UUID, ForeignKey("users.id"))
-    allergy_id = Column(UUID, ForeignKey("allergies.id"))
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    allergy_id = Column(UUID(as_uuid=True), ForeignKey("allergies.id"))
 
     user = relationship("User", back_populates="allergies")
     allergy = relationship("Allergy", back_populates="users")

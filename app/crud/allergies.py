@@ -21,18 +21,23 @@ def get_allergy_by_id(db: Session, allergy_id: UUID):
 
 
 def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
-    db_allergy = models.Allergy(**allergy.dict())
-    db.add(db_allergy)
-    db.commit()
-    db.refresh(db_allergy)
-    return db_allergy
-
+    if get_acl(db=db, uuid=user.id) < 3:
+        db_allergy = models.Allergy(**allergy.dict())
+        db.add(db_allergy)
+        db.commit()
+        db.refresh(db_allergy)
+        return db_allergy
+    raise crud_auth.privlige_exception
 
 def remove_allergy(db: Session, user: models.User, allergy_id: UUID):
-    # TODO: Implement "admins" table
-    if True:
+    try:
         db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
-        db.delete(db_allergy)
-        db.commit()
-        return "Allergy removed"
-    raise crud_auth.privlige_exception
+    except NameError:
+        raise not_found_exception
+    else:
+        if get_acl(db=db, uuid=user.id) < 3:
+            db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
+            db.delete(db_allergy)
+            db.commit()
+            return "Allergy removed"
+        raise crud_auth.privlige_exception

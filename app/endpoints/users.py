@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
@@ -23,7 +24,7 @@ def read_users(
     return crud_users.get_users(db=db, skip=skip, limit=limit, user=user)
 
 
-@router.get("/{user_id}")
+@router.get("/{user_id}", response_model=schemas_users.UserBase)
 def read_user_by_id(user_id: UUID, db: Session = Depends(get_db)):
     return crud_users.get_user_by_id(db=db, user_id=user_id)
 

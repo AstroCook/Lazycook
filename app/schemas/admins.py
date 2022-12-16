@@ -17,6 +17,13 @@ class BaseAdmin(BasicModel):
     user_id: UUID
 
 
+class AdminUnderUser(BaseModel):
+    class Config:
+        orm_mode = True
+
+    access_level: permissions
+
+
 class CreateAdmin(BaseModel):
     access_level: permissions
     user_id: UUID

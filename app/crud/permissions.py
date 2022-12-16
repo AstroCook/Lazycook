@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app import models
 from app.crud import authentication as crud_auth
 from app.schemas import admins as schemas_admins
+from app.exceptions import privlige_exception, not_found_exception
 
 
 def get_users_by_access_level(db: Session, access_level: int):
@@ -21,9 +22,11 @@ def get_admin_by_admin_id(db: Session, uuid: UUID):
 
 
 def get_user_access_level_from_id(db: Session, uuid: UUID):
-    admin = db.query(models.Admin).filter(models.Admin.user_id == uuid).first()
-    return admin.access_level
-
+    try:
+        admin = db.query(models.Admin).filter(models.Admin.user_id == uuid).first()
+        return admin.access_level
+    except AttributeError:
+        raise privlige_exception
 
 def add_admin(db: Session, admin: schemas_admins.CreateAdmin):
     db_admin = models.Admin(**admin.dict())
@@ -34,10 +37,13 @@ def add_admin(db: Session, admin: schemas_admins.CreateAdmin):
 
 
 def remove_admin(db: Session, user: models.User, admin_id: UUID):
-    # TODO: Implement "admins" table
-    if True:
-        db_admin = get_allergy_by_id(db=db, allergy_id=allergy_id)
-        db.delete(db_allergy)
-        db.commit()
-        return "Admin removed"
-    raise crud_auth.privlige_exception
+    try:
+        db_admin = get_admin_by_id(db=db, admin_id=admin_id)
+    except NameError:
+        raise not_found_exception
+    else:
+        if get_acl(db=db, uuid=user.id) < 3:
+            db.delete(db_admin)
+            db.commit()
+            return "Admin removed"
+        raise privlige_exception

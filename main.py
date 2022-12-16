@@ -2,7 +2,7 @@ import os
 import uvicorn
 
 if __name__ == "__main__":
-    os.environ("cd /app/app/alembic && alembic upgrade head")
+    os.system("cd /app/app/alembic && alembic upgrade head")
 
     uvicorn.run(
         "app.main:app",

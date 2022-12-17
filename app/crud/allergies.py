@@ -5,23 +5,30 @@ from sqlalchemy.orm import Session
 
 from app import models
 from app.crud import authentication as crud_auth
+from app.exceptions import not_found_exception
 from app.schemas import allergies as schemas_allergies
-
-
-def get_allergy_by_name(db: Session, name: str):
-    return db.query(models.User).filter(models.Allergy.name == name).first()
 
 
 def get_all_allergies(db: Session, skip: int = 0, limit: int = 25):
     return db.query(models.Allergy).offset(skip).limit(limit).all()
 
 
+def get_allergy_by_name(db: Session, name: str):
+    allergy = db.query(models.User).filter(models.Allergy.name == name).first()
+    if allergy:
+        return allergy
+    raise not_found_exception
+
+
 def get_allergy_by_id(db: Session, allergy_id: UUID):
-    return db.query(models.Allergy).filter(models.Allergy.id == allergy_id).first()
+    allergy = db.query(models.Allergy).filter(models.Allergy.id == allergy_id).first()
+    if allergy:
+        return allergy
+    raise not_found_exception
 
 
 def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
-    if get_acl(db=db, uuid=user.id) < 3:
+    if get_acl(db=db, uuid=user.id) <= 2:
         db_allergy = models.Allergy(**allergy.dict())
         db.add(db_allergy)
         db.commit()
@@ -31,14 +38,13 @@ def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
 
 
 def remove_allergy(db: Session, user: models.User, allergy_id: UUID):
-    try:
-        db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
-    except NameError:
-        raise not_found_exception
-    else:
-        if get_acl(db=db, uuid=user.id) < 3:
+    if get_acl(db=db, uuid=user.id) <= 2:
+        allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
+        if allergy:
             db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)
             db.delete(db_allergy)
             db.commit()
-            return "Allergy removed"
+        else:
+            raise not_found_exception
+    else:
         raise crud_auth.privlige_exception

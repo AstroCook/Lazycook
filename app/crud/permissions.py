@@ -18,33 +18,41 @@ def get_all_admins(db: Session):
 
 
 def get_admin_by_admin_id(db: Session, uuid: UUID):
-    return db.query(models.Admin).filter(models.Admin.id == uuid).first()
+    admin = db.query(models.Admin).filter(models.Admin.id == uuid).first()
+    if admin:
+        return admin
+    raise not_found_exception
 
 
 def get_user_access_level_from_id(db: Session, uuid: UUID):
-    try:
-        admin = db.query(models.Admin).filter(models.Admin.user_id == uuid).first()
+    admin = db.query(models.Admin).filter(models.Admin.user_id == uuid).first()
+    if admin:
         return admin.access_level
-    except AttributeError:
-        raise privlige_exception
+    raise not_found_exception
 
 
 def add_admin(db: Session, admin: schemas_admins.CreateAdmin):
-    db_admin = models.Admin(**admin.dict())
-    db.add(db_admin)
-    db.commit()
-    db.refresh(db_admin)
-    return db_admin
+    user = db.query(models.User).filter(models.User.id == admin.user_id).first()
+    if user:
+        db_admin = models.Admin(**admin.dict())
+        db.add(db_admin)
+        db.commit()
+        db.refresh(db_admin)
+        return db_admin
+    raise not_found_exception
 
 
 def remove_admin(db: Session, user: models.User, admin_id: UUID):
-    try:
-        db_admin = get_admin_by_id(db=db, admin_id=admin_id)
-    except NameError:
-        raise not_found_exception
-    else:
-        if get_acl(db=db, uuid=user.id) < 3:
-            db.delete(db_admin)
+    user_access_level = get_user_access_level_from_id(db=db, uuid=user.id)
+    if (
+        user_access_level <= 2
+        and user_access_level > get_admin_by_admin_id(db=db, uuid=admin_id)
+    ) or user_access_level == 1:
+        admin = get_admin_by_id(db=db, admin_id=admin_id)
+        if admin:
+            db.delete(admin)
             db.commit()
-            return "Admin removed"
+        else:
+            raise not_found_exception
+    else:
         raise privlige_exception

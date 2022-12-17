@@ -9,9 +9,8 @@ from sqlalchemy.orm import Session
 from app import models
 from app.crud import users as crud_users
 from app.database import get_db
+from app.exceptions import credentials_exception, privlige_exception
 from app.schemas import tokens as schemas_tokens
-from app.exceptions import privlige_exception, credentials_exception
-
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -19,6 +18,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 SECRET_KEY = "ea6e3a7f19faafa7d311a300e3c88c84c48fc73b82e35b868af30bbc06450a35"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)

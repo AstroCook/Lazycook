@@ -29,6 +29,7 @@ def create_allergy(db: Session, allergy: schemas_allergies.CreateAllergy):
         return db_allergy
     raise crud_auth.privlige_exception
 
+
 def remove_allergy(db: Session, user: models.User, allergy_id: UUID):
     try:
         db_allergy = get_allergy_by_id(db=db, allergy_id=allergy_id)

@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app import models
 from app.crud import authentication as crud_auth
+from app.exceptions import not_found_exception, privlige_exception
 from app.schemas import admins as schemas_admins
-from app.exceptions import privlige_exception, not_found_exception
 
 
 def get_users_by_access_level(db: Session, access_level: int):
@@ -27,6 +27,7 @@ def get_user_access_level_from_id(db: Session, uuid: UUID):
         return admin.access_level
     except AttributeError:
         raise privlige_exception
+
 
 def add_admin(db: Session, admin: schemas_admins.CreateAdmin):
     db_admin = models.Admin(**admin.dict())

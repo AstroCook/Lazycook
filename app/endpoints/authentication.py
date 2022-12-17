@@ -8,6 +8,7 @@ from app import models
 from app.crud import authentication as crud_auth
 from app.database import get_db
 from app.schemas import tokens as schemas_tokens
+from app.schemas import users as crud_users
 
 router = APIRouter()
 
@@ -32,7 +33,7 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/me")
+@router.get("/me", response_model=crud_users.UserInDB)
 async def read_users_me(
     current_user: models.User = Depends(crud_auth.get_current_active_user),
 ):

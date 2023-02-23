@@ -56,3 +56,20 @@ class Allergy(BaseDatabaseModel):
     name = Column(String)
 
     users = relationship("UserAllergy", back_populates="allergy")
+    ingridients = relationship("IngridientAllergy", back_populates="allergy")
+
+class Ingridient(BaseDatabaseModel):
+    __tablename__ = "ingridients"
+
+    name = Column(String)
+
+    allergens = relationship("IngridientAllergy", back_populates="ingridient")
+
+class IngridientAllergy(BaseDatabaseModel):
+    __tablename__ = "ingridient_allergies"
+
+    allergy_id = Column(UUID(as_uuid=True), ForeignKey("allergies.id"))
+    ingridient_id = Column(UUID(as_uuid=True), ForeignKey("ingridients.id"))
+
+    allergy = relationship("Allergy", back_populates="ingridients")
+    ingridient = relationship("Ingridient", back_populates="allergens")

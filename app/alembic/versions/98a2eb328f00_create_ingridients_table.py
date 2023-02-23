@@ -5,6 +5,8 @@ Revises: 8978fef71097
 Create Date: 2023-02-23 21:03:26.934022
 
 """
+from uuid import uuid4
+
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import UUID
@@ -26,7 +28,7 @@ def upgrade() -> None:
             "id",
             sa.dialects.postgresql.UUID(as_uuid=True),
             primary_key=True,
-            default=UUID.uuid4,
+            default=uuid4,
         ),
         sa.Column(
             "date_of_creation", sa.DateTime(timezone=True), server_default=func.now()

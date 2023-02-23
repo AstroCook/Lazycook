@@ -58,12 +58,14 @@ class Allergy(BaseDatabaseModel):
     users = relationship("UserAllergy", back_populates="allergy")
     ingridients = relationship("IngridientAllergy", back_populates="allergy")
 
+
 class Ingridient(BaseDatabaseModel):
     __tablename__ = "ingridients"
 
     name = Column(String)
 
     allergens = relationship("IngridientAllergy", back_populates="ingridient")
+
 
 class IngridientAllergy(BaseDatabaseModel):
     __tablename__ = "ingridient_allergies"

@@ -4,13 +4,21 @@ services:
   db:
     image: postgres:15
     ports:
-      - "5432:5432"
+      - "5430:5432"
     volumes:
       - ./local/postgresql:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=Maks
       - POSTGRES_PASSWORD=Maks
       - POSTGRES_DB=lazycook
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "5480:80"
 
   web:
     build:
@@ -25,6 +33,6 @@ services:
     volumes:
       - ./app:/app/app
     ports:
-      - "8000:8000"
+      - "7000:8000"
     depends_on:
       - db

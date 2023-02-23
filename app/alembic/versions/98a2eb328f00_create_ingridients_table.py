@@ -7,6 +7,9 @@ Create Date: 2023-02-23 21:03:26.934022
 """
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 
 # revision identifiers, used by Alembic.

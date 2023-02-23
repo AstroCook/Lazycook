@@ -88,8 +88,8 @@ def upgrade() -> None:
         ),
         sa.Column("date_of_last_edit", sa.DateTime(timezone=True), onupdate=func.now()),
         sa.Column("disabled", sa.Boolean, default=False),
-        sa.Column("user_id", UUID(as_uuid=True), ForeignKey("users.id")),
-        sa.Column("allergy_id", UUID(as_uuid=True), ForeignKey("allergies.id")),
+        sa.Column("user_id", UUID(as_uuid=True), sa.ForeignKey("users.id")),
+        sa.Column("allergy_id", UUID(as_uuid=True), sa.ForeignKey("allergies.id")),
     )
 
 

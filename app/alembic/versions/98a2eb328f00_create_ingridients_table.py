@@ -26,7 +26,7 @@ def upgrade() -> None:
             "id",
             sa.dialects.postgresql.UUID(as_uuid=True),
             primary_key=True,
-            default=uuid4,
+            default=UUID.uuid4,
         ),
         sa.Column(
             "date_of_creation", sa.DateTime(timezone=True), server_default=func.now()

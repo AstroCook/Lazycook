@@ -9,8 +9,6 @@ from app.schemas.base import BasicModel
 class BaseAllergy(BasicModel):
     name: str
 
-    users: UUID
-
 
 class ShowAllergy(BaseModel):
     name: str

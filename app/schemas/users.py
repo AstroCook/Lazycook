@@ -14,7 +14,7 @@ class UserBase(BasicModel):
     avatar_url: str
     description: Optional[str]
 
-    allergies: Union[List[UserAllergyShow], UserAllergyShow] = []
+    allergies: Union[List[UserAllergyShow], Optional[UserAllergyShow]] = []
     access_level: Optional[BaseAdmin]
 
 
